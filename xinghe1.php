@@ -10,9 +10,9 @@ function writeData($data,$conn)
   for($i=0;$i<count($data);$i++){
     $temp = $data[$i];
     $url = $temp['main_link_href'];
-    $title = mysql_real_escape_string($temp['title']);
+    $title = ($temp['title']);
     $query = "INSERT INTO  urls(url, title) VALUES ('$url', '$title')";  
-    $result = mysql_query($query,$conn);
+    $result = $conn->query($query);
   }
 }
 
@@ -35,7 +35,7 @@ $main_params = '{
     "table_name":"xinghe",
     "description":"This is for Rqyh",
     "main_block":".blockLink",
-    "start_path":"https://www.23uup.com/rqjh/",
+    "start_path":"https://www.23uup.com/xhdd/",
     "host":"https://www.23uup.com",
     "next_link":{"current":null,"next":null},
     "attribute":{"main_link_href":"","title":"span"}
@@ -47,15 +47,16 @@ $mysql_server_name="localhost";
 $mysql_username="root"; 
 $mysql_password=""; 
 $mysql_database="k_crawler"; 
-$conn=mysql_connect($mysql_server_name, $mysql_username,$mysql_password);
-mysql_select_db($mysql_database);
-mysql_query("set names 'utf8'");
+$conn= new mysqli($mysql_server_name, $mysql_username,$mysql_password,$mysql_database);
+//mysqli_select_db($mysql_database);
+$conn->set_charset("utf8");
+//mysql_query("set names 'utf8'");
 
 
 $url_array = array();
-for($i=2;$i<300;$i++){
+for($i=2;$i<902;$i++){
   $t_var = json_decode($main_params);
-  $t_var->start_path = $t_var->host.'/rqjh/index_'.$i.'.html';
+  $t_var->start_path = $t_var->host.'/xhdd/index_'.$i.'.html';
   array_push($url_array,json_encode($t_var));
 }
 
@@ -72,6 +73,7 @@ for($i=0;$i<count($url_array);$i++){
   //   array_push($sqlReadyData,$temp);
   // }
   $data = clawerData($url_array[$i]);
+  echo $i.'     ';
   writeData($data,$conn);
 }
 
@@ -84,8 +86,8 @@ for($i=0;$i<count($url_array);$i++){
 //     $query = "INSERT INTO  urls(url, title) VALUES ('$url', '$title')";  
 //     $result = mysql_query($query,$conn);
 // }
-
-mysql_close($conn);  
+$conn->close();
+//mysql_close($conn);  
 echo 'end';
 
 

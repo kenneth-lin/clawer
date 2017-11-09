@@ -1,10 +1,10 @@
-CREATE TABLE urls (
+CREATE TABLE k_crawler.urls (
 ID int(11)  NOT NULL auto_increment Primary Key,
 url varchar(255) NOT NULL,
 title TEXT
 );
 
-CREATE TABLE context (
+CREATE TABLE k_crawler.context (
 ID int(11)  NOT NULL auto_increment Primary Key,
 url varchar(255) NOT NULL,
 title TEXT,
