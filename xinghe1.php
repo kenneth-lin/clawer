@@ -43,7 +43,7 @@ $mysql_database="k_crawler";
 $conn= new mysqli($mysql_server_name, $mysql_username,$mysql_password,$mysql_database);
 $conn->set_charset("utf8");
 
-
+$add_order = 0;
 
 for($at=0;$at<count($order);$at++){
 
@@ -77,13 +77,16 @@ $sqlReadyData = array();
 for($i=0;$i<count($url_array);$i++){
   $data = clawerData($url_array[$i]);
   echo $i.'     ';
+  if(count($data)==0) echo 'no data     ';
   writeData($data,$conn);
 }
-if (!mysqli_ping ($conn)) {  
+if ($add_order> 40) {  
   $conn->close();
   $conn= new mysqli($mysql_server_name, $mysql_username,$mysql_password,$mysql_database);
   $conn->set_charset("utf8");
+  $add_order = 0;
 }
+$add_order++;
 
 }
 
