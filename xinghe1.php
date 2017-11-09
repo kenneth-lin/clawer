@@ -10,7 +10,7 @@ function writeData($data,$conn)
   for($i=0;$i<count($data);$i++){
     $temp = $data[$i];
     $url = $temp['main_link_href'];
-    $title = mysql_escape_string($temp['title']);
+    $title = mysql_real_escape_string($temp['title']);
     $query = "INSERT INTO  urls(url, title) VALUES ('$url', '$title')";  
     $result = mysql_query($query,$conn);
   }
