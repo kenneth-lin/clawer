@@ -6,7 +6,7 @@ $queue = isset($_REQUEST['search'])?$_REQUEST['search']:'';
 function findUrlData($str,$conn)
 {
     $reslist = array();
-    $str = "SELECT id,url,title from urls where title like '%$str%'";
+    $str = "SELECT id,url,title from url1 where title like '%$str%'";
     $res = $conn->query($str);
     $res->data_seek(1);
     //$res=mysql_query("SELECT id,url,title from urls where title like '%$str%'", $conn);
@@ -47,6 +47,8 @@ $conn->close();
 
 
 }
+
+
 
 echo '</div></body>';
 
