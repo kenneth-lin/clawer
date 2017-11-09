@@ -1,0 +1,30 @@
+<script>
+    function a_href_add_host() {
+        var host = '{{0}}';
+        var all_a = document.getElementsByTagName('a');
+        for (var i = 0; i < all_a.length; i++) {
+            var link = all_a[i].getAttribute('href');
+            if (link != null) {
+                var new_link = update_link(link,host);
+                all_a[i].setAttribute('href',new_link);
+            }
+        }
+    }
+    function update_link(link, host) {
+        if (link.indexOf('http') == 1) {
+            return link;
+        } else {
+            return host + link;
+        }
+
+    }
+    (function () {
+        if (document.all) {
+            window.attachEvent("onload", a_href_add_host);
+        }
+        else {
+            window.addEventListener("load", a_href_add_host, false);
+        }
+    })();
+
+</script>
