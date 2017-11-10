@@ -152,7 +152,16 @@ class MySQLClass
         $record = new InputDataRecord();
         $record->init($json_params);
         MySQLClass::addData($conn,$record->crawler_main_table,$data);
-        $conn->close();
+        MySQLClass::close($conn);
+    }
+
+    static public function findClawerData($json_params){
+        $conn = MySQLClass::createConn();
+        $record = new InputDataRecord();
+        $record->init($json_params);
+        $data = MySQLClass::findData($conn,$record->crawler_main_table,$record->condition);
+        MySQLClass::close($conn);
+        return $data;
     }
     
 }

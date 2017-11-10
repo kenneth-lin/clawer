@@ -10,7 +10,8 @@
     "host":"xxx",
     "next_link":["current":".current","next":".next"],
     "next_link_page": 2,
-    "attribute":["title":".hae","img":".ex"]
+    "attribute":["title":".hae","img":".ex"],
+    "condition":"";
 }
 
 
@@ -26,6 +27,7 @@ class InputDataRecord
     public $attribute;
     public $start_path;
     public $host;
+    public $condition;
 
 
     public function init($json_params)
@@ -39,6 +41,7 @@ class InputDataRecord
         $this->start_path = $t_var->start_path;
         $this->host = $t_var->host;
         $this->next_link_page = isset($t_var->next_link_page)? $t_var->next_link_page:1;
+        $this->condition = isset($t_var->condition)? $t_var->condition:'';
     }
 
 }
