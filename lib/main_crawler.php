@@ -8,6 +8,32 @@ class Crawler_Data
     private $_out_data = array();
     public $_crawler_params;
     
+    static public function clawer($params)
+    {
+        $data = array();
+        try{
+            $crawler = new Crawler_Data();
+            $crawler->init($params);
+            $pars = $crawler->params();
+            $crawler->get_count_run_dom($pars->next_link_page,false);
+            $data = $crawler->get_out_data();
+        }catch(Exception $e){
+            
+        }
+        return $data;
+    }
+
+    static public function updateClawerParamLink($params,$link){
+        $t_var = json_decode($main_params);
+        if(strpos($link,4,0) == 'http')
+        {
+            $t_var->start_path = $link;
+        }else{
+            $t_var->start_path = $t_var->host.$link;
+        }
+        return json_encode($t_var);
+    }
+    
     
     public function init($json_params)
     {
@@ -17,6 +43,11 @@ class Crawler_Data
         $this->_crawler_from = $this->_crawler_params->start_path;
         $this->_host = $this->_crawler_params->host;
         $this->_out_data = array();
+    }
+
+    public function params()
+    {
+        return $this->_crawler_params;
     }
     
     public function get_out_data()
@@ -38,16 +69,16 @@ class Crawler_Data
     {
         
         $html = new simple_html_dom();
-        $cnt=0; 
-
+        $cnt=0;
+        
         $content_parm = stream_context_create(array(
-            'http' => array(
-            'timeout' => 5 
-            ) 
-        ));  
+        'http' => array(
+        'timeout' => 5
+        )
+        ));
         while($cnt < 3 && ($str=@$html->load_file($path))===FALSE) {
             $cnt++;
-            }
+        }
         if($cnt == 3) return;
         foreach($html->find($data_attribute) as $data_list){
             if(empty($data_list)) continue;
@@ -68,13 +99,10 @@ class Crawler_Data
                         if(empty($e->innertext)){
                             $temp[$key] = '';
                         }else{
-                            $temp[$key] = iconv('gbk','utf-8//IGNORE',$e->innertext);//$e->outertext;
+                            //$temp[$key] = iconv('gbk','utf-8//IGNORE',$e->innertext);//$e->outertext;
+
+                            $temp[$key] = mb_convert_encoding($e->innertext,'UTF-8');
                         }
-                        //$temp[$key] = $e->innertext;
-                        //$aaa = $e->innertext;
-                        //$temp[$key] = $aaa;
-                        //echo $e->outertext;
-                        //echo json_encode($temp[$key]);
                     }
                 }
             }
@@ -82,7 +110,7 @@ class Crawler_Data
         }
         return $this->find_next_path($html,$next_path_attribute);
     }
-
+    
     function find_next_path($html,$next_path_attribute)
     {
         if($next_path_attribute->next == null) return '';
@@ -93,7 +121,7 @@ class Crawler_Data
         {
             $e = $html->find($next_path_attribute->current,0);
             $p = $e->next_sibling();
-            echo $p->outertext; 
+            echo $p->outertext;
             $target = $p->href;
             if(empty($target))
             {
@@ -106,7 +134,7 @@ class Crawler_Data
             
         }
     }
-
+    
     function update_host($link, $host)
     {
         if(strpos($link,4,0) == 'http')
@@ -116,7 +144,7 @@ class Crawler_Data
             return $host.$link;
         }
     }
-
+    
 }
 
 ?>
