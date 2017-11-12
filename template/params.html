@@ -1,45 +1,36 @@
-<form action="" id='form' method="POST">
-    <TEXTAREA type="text" id='params' name='params' value=''></TEXTAREA>
-    <input type="submit" value='Submit' id="params_submit" onclick='javascipt:updatedInput();' />
-</form>
+<div style="height:390px;">
+    <form action="" id='form' method="POST">
+        <TEXTAREA type="text" id='params' name='params' value=''></TEXTAREA>
+        <input type="submit" value='Submit' id="params_submit" onclick='javascipt:updatedInput();' />
+    </form>
+</div>
 
 <style>
-    #params {
+    #params{
         width: 800px;
-        height: 300px;
-        font-size: 20px;
-        padding: 10px;
+        height: 330px;
+        font-size: 16px;
+        padding: 20px;
     }
 
     #params_submit {
         float: right;
         width: 220px;
         margin: 10px 20px;
-        font-size: 40;
+        font-size: 30;
     }
 </style>
 
 <script>
     document.getElementById("form").setAttribute('action', location.href);
-    var value = '{\n' +
-        '"table_name":"haha",\n' +
-        '"description":"This is for Rqyh",\n' +
-        '"main_block":".joke-list-item",\n' +
-        '"start_path":"https://www.haha.mx/",\n' +
-        '"host":"https://www.haha.mx",\n' +
-        '"next_link":{"current":null,"next":null},\n' +
-        '"attribute":{"nick_href":".joke-user-info-nickname","nick":".joke-user-info-nickname"},\n' +
-        '"condition":"order by id desc"\n' +
-        '}';
     var cookie_params = decodeURI(getCookie('params'));
     if (cookie_params != "null") {
-          document.getElementById("params").value =  cookie_params;
+        document.getElementById("params").value = cookie_params;
     } else {
-
-        document.getElementById("params").value = value;
+        document.getElementById("params").value = formatJson(JSON.parse(initStartParamsString()));
     }
 
-    document.getElementById("form").setAttribute('action',location.href);
+    document.getElementById("form").setAttribute('action', location.href);
 
     function updatedInput() {
         setCookie('params', encodeURI(document.getElementById("params").value));

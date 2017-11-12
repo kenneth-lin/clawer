@@ -1,0 +1,114 @@
+<div id="params_input">
+    <div><label>table_name</label><input name="table_name" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div><label>description</label><input name="description" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div><label>main_block</label><input name="main_block" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div><label>start_path</label><input name="start_path" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div><label>host</label><input name="host" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div><label>next_link</label><input name="next_link" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div><label>attribute</label><input name="attribute" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div><label>condition</label><input name="condition" value="" oninput="javascript: updateParamsElement();"/></div>
+    <div id="update_btn"><input type="button" onclick="javascript:setParams();" value="Update params and go to show." /></div>
+</div>
+
+<script>
+    initParams();
+    function setParams() {
+        var params_string = getParamsString();
+        setCookie('params', encodeURI(params_string));
+    }
+
+    function updateParamsElement(){
+        //formatJson(JSON.parse(getParamsString()));
+        document.getElementById("params").value = formatJson(JSON.parse(getParamsString()));
+    }
+
+    function getParamsString(){
+        var input_array = getAllParams();
+        var set_params = input_array;
+        for (var name in input_array) {
+            if (name.toLocaleLowerCase() == 'next_link' || name.toLocaleLowerCase() == 'attribute') {
+                set_params[name] = JSON.parse(input_array[name]);
+            } else {
+                set_params[name] = input_array[name];
+            }
+        }
+        return JSON.stringify(set_params);
+    }
+
+    function getAllParams() {
+        var params_input = document.getElementById('params_input');
+        var input_array = params_input.getElementsByTagName('input');
+        var ret = {};
+        for (var i = 0; i < input_array.length; i++) {
+            var temp = input_array[i];
+            var name = temp.getAttribute('name');
+            ret[name] = temp.value;
+        }
+        return ret;
+    }
+
+    function initParams() {
+        var cookie_params = decodeURI(getCookie('params'));
+        var params_input = document.getElementById('params_input');
+        var input_array = params_input.getElementsByTagName('input');
+        if (cookie_params != "null") {
+            var params_object = JSON.parse(cookie_params);
+            for (var key in params_object) {
+                for (var i = 0; i < input_array.length; i++) {
+                    var temp = input_array[i];
+                    var name = temp.getAttribute('name');
+                    if (name != null && name.toLocaleLowerCase() == key.toLocaleLowerCase()) {
+                        if (name.toLocaleLowerCase() == 'next_link' || name.toLocaleLowerCase() == 'attribute') {
+                            temp.value = JSON.stringify(params_object[key]);
+                        } else {
+                            temp.value = params_object[key];
+                        }
+                    }
+
+                }
+            }
+        } else {
+            var params = initStartParamsString();
+            var params_object = JSON.parse(params);
+            for (var key in params_object) {
+                for (var i = 0; i < input_array.length; i++) {
+                    var temp = input_array[i];
+                    var name = temp.getAttribute('name');
+                    if (name != null && name.toLocaleLowerCase() == key.toLocaleLowerCase()) {
+                        if (name.toLocaleLowerCase() == 'next_link' || name.toLocaleLowerCase() == 'attribute') {
+                            temp.value = JSON.stringify(params_object[key]);
+                        } else {
+                            temp.value = params_object[key];
+                        }
+                    }
+
+                }
+            }
+        }
+        var form=document.getElementById("params_input");
+        addEventListener(form,"input",function(e){
+            alert(1);
+            updateParamsElement();
+        });
+    }
+
+</script>
+
+<style>
+    #params_input input {
+        margin: 5px 10px;
+        width: 600px;
+        font-size: 20px;
+    }
+
+    #params_input label {
+
+        width: 100px;
+        font-size: 20px;
+    }
+
+    #update_btn {
+        font-size: 20px;
+        float: right;
+    }
+</style>

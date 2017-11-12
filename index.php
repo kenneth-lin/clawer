@@ -16,6 +16,10 @@ if(isset($_REQUEST['action'])){
         include('./view/show.php');
     }else if($action == 'add'){
         include('./view/add.php');
+    }else if($action == 'edit'){
+        include('./view/edit.php');
+    }else if($action == 'capture'){
+        include('./view/capture.php');
     }
 
 }else{

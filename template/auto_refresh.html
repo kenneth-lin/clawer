@@ -1,0 +1,26 @@
+<div id="auto_fresh">
+    <input type="button" value="Auto Refresh in one minute." onclick="refresh_click();">
+</div>
+
+<style>
+
+#auto_fresh input{
+    font-size: 20px;
+    width:300px;
+}
+
+</style>
+
+<script>
+
+    function refresh(){
+        location.href = '/?action=capture&refresh=1';
+    }
+
+    function refresh_click()
+    {
+        setInterval(refresh(),60*1000);
+    }
+    
+
+</script>
