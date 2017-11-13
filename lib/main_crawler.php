@@ -7,6 +7,7 @@ class Crawler_Data
     public $_host = '';
     private $_out_data = array();
     public $_crawler_params;
+    public $_special_encode;
     
     static public function clawer($params)
     {
@@ -43,6 +44,7 @@ class Crawler_Data
         $this->_crawler_from = $this->_crawler_params->start_path;
         $this->_host = $this->_crawler_params->host;
         $this->_out_data = array();
+        $this->_special_encode = $record->encode;
     }
 
     public function params()
@@ -109,7 +111,11 @@ class Crawler_Data
                         if(empty($e->innertext)){
                             $temp[$key] = '';
                         }else{
-                            $temp[$key] = mb_convert_encoding($e->innertext,'UTF-8');
+                            if(empty($this->_special_encode)){
+                                $temp[$key] = mb_convert_encoding($e->innertext,'UTF-8');
+                            }else{
+                                $temp[$key] = mb_convert_encoding($e->innertext,'UTF-8',$this->_special_encode);
+                            }
                         }
                     }
                 }

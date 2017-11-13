@@ -28,6 +28,7 @@ class InputDataRecord
     public $start_path;
     public $host;
     public $condition;
+    public $encode;
 
 
     public function init($json_params)
@@ -42,6 +43,7 @@ class InputDataRecord
         $this->host = $t_var->host;
         $this->next_link_page = isset($t_var->next_link_page)? $t_var->next_link_page:1;
         $this->condition = isset($t_var->condition)? $t_var->condition:'';
+        $this->encode = isset($t_var->encode)? $t_var->encode:'';
     }
 
 }

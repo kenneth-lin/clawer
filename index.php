@@ -3,7 +3,7 @@
 include('./lib/include.php');
 include('./ext/include.php');
 include('./config/include.php');
-
+header("Content-type: text/html; charset=utf-8"); 
 EXT_Template::add_header('./template/header.html');
 
 echo '<div class="content">';
