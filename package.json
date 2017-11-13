@@ -1,0 +1,19 @@
+{
+  "name": "clawer",
+  "version": "0.0.1",
+  "description": "Clawer",
+  "main": "index.js",
+  "scripts": {
+    "clear": "DEL /F /A /Q ./run_bat"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenneth-lin/clawer.git"
+  },
+  "author": "Kenneth Lin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenneth-lin/clawer/issues"
+  },
+  "homepage": "https://github.com/kenneth-lin/clawer#readme"
+}

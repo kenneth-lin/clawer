@@ -1,16 +1,28 @@
 <div id="selector">
-    <span><input type='button' onclick='javascript:location.href ="/?action=show"' value="Show"/></span>
-    <span><input type='button' onclick='javascript:location.href ="/?action=add"' value="Add"/></span>
-    <span><input type='button' onclick='javascript:location.href ="/?action=edit"' value="Edit"/></span>
-    <span><input type='button' onclick='javascript:location.href ="/?action=capture"' value="Capture"/></span>
-    <span><input type='button' onclick='javascript:delCookie("params"); location.href = location.href;' value="Clear"/></span>
+    <div>
+        <span><input type='button' onclick='javascript:location.href ="/?action=show"' value="Show"/></span>
+        <span><input type='button' onclick='javascript:location.href ="/?action=add"' value="Add"/></span>
+        <span><input type='button' onclick='javascript:location.href ="/?action=edit"' value="Edit"/></span>
+        <span><input type='button' onclick='javascript:location.href ="/?action=capture"' value="Capture"/></span>
+        <span><input type='button' onclick='javascript:delCookie("params"); location.href = location.href;' value="Clear"/></span>
+    </div>
+    <div>
+        <span><input type='button' onclick='javascript:location.href ="/?action=bat"' value="GenBat"/></span>
+    </div>
 </div>
 
 <style>
-    #selector input{
-        width:130px;
+    #selector input {
+        width: 130px;
         margin: 10px 10px;
         font-size: 30;
     }
-
 </style>
+
+<script>
+    function GenBat(){
+        //location.href ="/?action=bat";
+    }
+
+
+</script>

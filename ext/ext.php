@@ -14,6 +14,19 @@ class EXT_Template
         $string = file_get_contents($header_path);
         echo $string;
     }
+
+    static function update_host($link, $host)
+    {
+        if(strpos($link,4,0) == 'http')
+        {
+            return $link;
+        }else if(strpos($link,1,0) != '/'){
+            return $host.'/'.$link;
+        }else{
+            
+            return $host.$link;
+        }
+    }
 }
 
 

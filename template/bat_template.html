@@ -1,0 +1,32 @@
+<?php
+
+    defined('PATH_AT') or define('PATH_AT', '..');
+    include(PATH_AT.'/lib/include.php');
+    include(PATH_AT.'/ext/include.php');
+    include(PATH_AT.'/config/include.php');
+
+    $main_params = '{0}';
+    $bat_list = '{1}';
+
+
+    $o_bat_list = json_decode($bat_list);
+    if(count($o_bat_list) > 0){
+        foreach($o_bat_list as $key => $value){
+            $new_params = '';
+            $o_main_params = json_decode($main_params);
+            $o_main_params->start_path = EXT_Template::update_host( $value, $o_main_params->host);
+            $new_params = json_encode($o_main_params);
+            $data = Crawler_Data::clawer($main_params);
+            MySQLClass::addClawerData($main_params,$data);
+            echo 'Process is '.$key.' / '.count($o_bat_list).' is done! \n ';
+        }
+    }else{
+        $data = Crawler_Data::clawer($main_params);
+        MySQLClass::addClawerData($main_params,$data);
+    }
+    echo 'OK. \n';
+
+
+
+
+?>

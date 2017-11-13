@@ -14,12 +14,13 @@
 <script>
 
     function refresh(){
-        location.href = '/?action=capture&refresh=1';
+        document.getElementById('form').setAttribute('action','/?action=capture&refresh=1'); 
+        document.getElementById('params_submit').click();
     }
 
     function refresh_click()
     {
-        setInterval(refresh(),60*1000);
+        setTimeout(refresh,60*1000);
     }
     
 

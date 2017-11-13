@@ -1,0 +1,51 @@
+<div id="bat_list_div">
+    <form action="/?action=bat" method="POST">
+        <div>You could edit "params" and "bat list" to generate backoffice batch.</div>
+        <textarea style="display:none;" id="copy_params" name="params"></textarea>
+        <textarea id="bat_list" name="bat_list"></textarea>
+        <div>
+            <input type="submit" onclick="javascript:bat_gen();" value="Batch Generate" />
+        </div>
+    </form>
+</div>
+
+<style>
+    #bat_list_div #bat_list {
+        width: 800px;
+        min-height: 200px;
+    }
+
+    #bat_list_div div {
+        font-size: 20px;
+    }
+
+    #bat_list_div input {
+        float: right;
+        width: 220px;
+        margin: 10px 20px;
+        font-size: 30;
+    }
+</style>
+
+
+<script>
+    function bat_gen() {
+        var update_that = document.getElementById("params").value.replace("\n", '');
+        document.getElementById("copy_params").value = update_that;
+
+        document.getElementById("bat_list").value = "\n"+document.getElementById("bat_list").value;
+        var bat_list = document.getElementById("bat_list").value.replace("\n", '');
+        var bat_array = ("\n"+bat_list).split('\n');
+        var bat_ret = [];
+        var start_index = 0;
+        for (var key in bat_array) {
+            if (bat_array[key].Trim() == '') {
+                continue;
+            }
+            bat_ret[start_index++] = bat_array[key].Trim();
+        }
+        document.getElementById("bat_list").value = JSON.stringify(bat_ret);
+
+    }
+
+</script>

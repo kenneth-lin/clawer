@@ -139,7 +139,9 @@ class Crawler_Data
     {
         if(strpos($link,4,0) == 'http')
         {
-            
+            return $link;
+        }else if(strpos($link,1,0) != '/'){
+            return $host.'/'.$link;
         }else{
             return $host.$link;
         }

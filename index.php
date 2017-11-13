@@ -20,6 +20,8 @@ if(isset($_REQUEST['action'])){
         include('./view/edit.php');
     }else if($action == 'capture'){
         include('./view/capture.php');
+    }else if($action == 'bat'){
+        include('./view/bat.php');
     }
 
 }else{

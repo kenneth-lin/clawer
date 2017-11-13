@@ -25,7 +25,7 @@
     document.getElementById("form").setAttribute('action', location.href);
     var cookie_params = decodeURI(getCookie('params'));
     if (cookie_params != "null") {
-        document.getElementById("params").value = cookie_params;
+        document.getElementById("params").value = formatJson(cookie_params);
     } else {
         document.getElementById("params").value = formatJson(JSON.parse(initStartParamsString()));
     }
@@ -34,10 +34,8 @@
 
     function updatedInput() {
         setCookie('params', encodeURI(document.getElementById("params").value));
-
         var update_that = document.getElementById("params").value.replace("\n", '');
         document.getElementById("params").value = update_that;
-
     }
 
 </script>
