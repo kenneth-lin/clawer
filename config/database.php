@@ -208,6 +208,24 @@ class MySQLClass
         MySQLClass::close($conn);
         return $data;
     }
+
+    static public function listTable(){
+        $conn = MySQLClass::createConn();
+        $list_table = array();
+        $datatable=MYSQL_DATABASE;
+        $sql = "select distinct TABLE_NAME as table_name from information_schema.COLUMNS "
+        . "where TABLE_SCHEMA='$datatable' and TABLE_NAME <> 'progress'; ";
+        $result = $conn->query($sql);
+        if($result === false){
+            return $list_table;
+        }
+        $number_column = 0;
+        while($row = $result->fetch_assoc()){
+            $list_table[] = $row;
+        }
+        MySQLClass::close($conn);
+        return $list_table;
+    }
     
 }
 

@@ -26,6 +26,8 @@ if(isset($_REQUEST['action'])){
         include('./view/del.php');
     }else if($action == 'progress'){
         include('./view/progress.php');
+    }else if($action == 'ls_table'){
+        include('./view/ls_table.php');
     }
 
 }else{
