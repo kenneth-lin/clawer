@@ -17,14 +17,13 @@ class EXT_Template
 
     static function update_host($link, $host)
     {
-        if(strpos($link,4,0) == 'http')
+        if(strpos($link,'http',0) === 0)
         {
             return $link;
-        }else if(strpos($link,1,0) != '/'){
-            return $host.'/'.$link;
-        }else{
-            
+        }else if(strpos($link,'/',0) === 0){
             return $host.$link;
+        }else{
+            return $host.'/'.$link;
         }
     }
 }

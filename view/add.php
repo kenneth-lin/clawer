@@ -8,7 +8,7 @@ if(isset($_REQUEST['params'])){
     MySQLClass::addClawerData($main_params,$data);
     EXT_Template::add_header('./template/go_to_index.html');
 }else{
-    echo 'nothing';
+    echo 'You could add data to database.';
 }
 
 

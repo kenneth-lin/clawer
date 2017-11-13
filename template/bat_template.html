@@ -1,6 +1,6 @@
 <?php
 
-    defined('PATH_AT') or define('PATH_AT', '..');
+    defined('PATH_AT') or define('PATH_AT', '.');
     include(PATH_AT.'/lib/include.php');
     include(PATH_AT.'/ext/include.php');
     include(PATH_AT.'/config/include.php');
@@ -16,14 +16,22 @@
             $o_main_params = json_decode($main_params);
             $o_main_params->start_path = EXT_Template::update_host( $value, $o_main_params->host);
             $new_params = json_encode($o_main_params);
-            $data = Crawler_Data::clawer($main_params);
-            MySQLClass::addClawerData($main_params,$data);
+            $data = Crawler_Data::clawer($new_params);
+            MySQLClass::addClawerData($new_params,$data);
+            $str_log = '{"file":"{2}","log":"{3}"}';
+            $str_log = str_replace('{2}',basename(__FILE__),$str_log);
+            $str_log = str_replace('{3}','Process is '.$key.' / '.count($o_bat_list).' is done!',$str_log);
+            MySQLClass::writeProgressLog(array(json_decode($str_log)));
             echo 'Process is '.$key.' / '.count($o_bat_list).' is done! \n ';
         }
     }else{
         $data = Crawler_Data::clawer($main_params);
         MySQLClass::addClawerData($main_params,$data);
     }
+    $str_log = '{"file":"{2}","log":"{3}"}';
+    $str_log = str_replace('{2}',basename(__FILE__),$str_log);
+    $str_log = str_replace('{3}','Done!',$str_log);
+    MySQLClass::writeProgressLog(array(json_decode($str_log)));
     echo 'OK. \n';
 
 

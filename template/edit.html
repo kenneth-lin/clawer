@@ -7,6 +7,7 @@
     <div><label>next_link</label><input name="next_link" value="" oninput="javascript: updateParamsElement();" /></div>
     <div><label>attribute</label><input name="attribute" value="" oninput="javascript: updateParamsElement();" /></div>
     <div><label>condition</label><input name="condition" value="" oninput="javascript: updateParamsElement();" /></div>
+    <div><label>next_link_page</label><input name="next_link_page" value="" oninput="javascript: updateParamsElement();" /></div>
     <div id="update_btn"><input type="button" name="button" onclick="javascript:setParams();" value="Update params and go to show." /></div>
 </div>
 
@@ -14,9 +15,9 @@
     initParams();
     function setParams() {
         var params_string = getParamsString();
-        if(params_string != undefined){
-        setCookie('params', encodeURI(params_string));
-        location.href = '/?action=show';
+        if (params_string != undefined) {
+            setCookie('params', encodeURI(params_string));
+            location.href = '/?action=show';
         }
     }
 
@@ -35,11 +36,21 @@
             var input_array = getAllParams();
             var set_params = {};
             for (var name in input_array) {
-                if(name == "button") continue;
+                if (name == "button") continue;
+
                 if (name.toLocaleLowerCase() == 'next_link' || name.toLocaleLowerCase() == 'attribute') {
                     set_params[name] = JSON.parse(input_array[name]);
                 } else {
-                    set_params[name] = input_array[name];
+                    if (name.toLocaleLowerCase() == 'host') {
+
+                        var url = input_array['start_path'];
+                        var no_http = url.split("//")[1];
+                        var target = url.split("//")[0] + "//" + no_http.split("/")[0];
+                        set_params[name] = target;
+                        document.getElementsByName('host')[0].value = target;
+                    } else {
+                        set_params[name] = input_array[name];
+                    }
                 }
             }
             return JSON.stringify(set_params);

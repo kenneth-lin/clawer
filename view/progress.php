@@ -1,19 +1,13 @@
 <?php
 
 
-if(isset($_REQUEST['params'])){
-    $params = $_REQUEST['params'];
     EXT_Template::add_header('./template/show.html');
 
-
-    $data = MySQLClass::findClawerData($params);
+    $data = MySQLClass::findProgressLog();
     
-    echo ClawerRender::div(ClawerRender::span('Total is '.count($data).'.'));
-
-    $record = new InputDataRecord();
+    echo ClawerRender::div(ClawerRender::span('It shows the top 50 records.'));
     $render = '';
-    $record->init($params);
-    $attr = $record->attribute;
+    $attr = json_decode('{"file":"","log":""}');
     foreach( $attr as $key => $value){
         $render = $render.ClawerRender::td(ClawerRender::span($key));
     }
@@ -42,10 +36,6 @@ if(isset($_REQUEST['params'])){
         $render = $render.$temp_render;
     }
     echo ClawerRender::table($render);
-    
-}else{
-    echo 'Click Submit and show data.';
-}
 
 
 

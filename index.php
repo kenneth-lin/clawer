@@ -22,6 +22,10 @@ if(isset($_REQUEST['action'])){
         include('./view/capture.php');
     }else if($action == 'bat'){
         include('./view/bat.php');
+    }else if($action == 'del'){
+        include('./view/del.php');
+    }else if($action == 'progress'){
+        include('./view/progress.php');
     }
 
 }else{

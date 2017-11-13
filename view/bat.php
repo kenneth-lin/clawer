@@ -4,7 +4,10 @@ if(isset($_REQUEST['params']) && isset($_REQUEST['bat_list'])){
     $main_params = $_REQUEST['params'];
     $bat_list = $_REQUEST['bat_list'];
 
-    $file_name = "./run_bat/newfile_".date('Y_m_d_H_i_s', time()).".php";
+    $record = new InputDataRecord();
+    $record->init($main_params);
+
+    $file_name = "./run_bat/".$record->crawler_main_table."_".date('Y_m_d_H_i_s', time()).".php";
     $myfile = fopen($file_name, "w+");
 
     $string = file_get_contents('./template/bat_template.html');
@@ -14,9 +17,12 @@ if(isset($_REQUEST['params']) && isset($_REQUEST['bat_list'])){
     fwrite($myfile, $string);
     fclose($myfile);
     
-    echo "You could run bat :<br/>";
-    echo "# php ".$file_name;
+    echo '<div id="bat_warning">You could run bat :<br/>';
+    echo '# <span id="run_it">php '.$file_name.'</span></div>';
+    EXT_Template::add_header('./template/bat_run_it.html');
 
+}else if(isset($_REQUEST['run_bat'])){
+    system($_REQUEST['run_bat']);
 }else{
     EXT_Template::add_header('./template/bat.html');
 }

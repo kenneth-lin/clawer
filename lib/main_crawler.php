@@ -61,7 +61,9 @@ class Crawler_Data
         $run_path = $this->_crawler_from;
         for($i=0;$i<$count;$i++)
         {
-            $run_path = $this->get_dom_data($run_path,$params->main_block,$params->attribute,$this->_out_data,$params->next_link,$print);
+            if(!empty($run_path)){
+                $run_path = $this->get_dom_data($run_path,$params->main_block,$params->attribute,$this->_out_data,$params->next_link,$print);
+            }
         }
     }
     
@@ -94,13 +96,19 @@ class Crawler_Data
                     $temp[$key] = '';
                 }else{
                     if(strpos($key,'href') !== false){
-                        $temp[$key] = $this->update_host($e->href,$this->_host);
+                        //$temp[$key] = $this->update_host($e->href,$this->_host);
+                        $target = $e->href;
+                        if(empty($target))
+                        {
+                            $target = $e->find('a',0)->href;
+                            $temp[$key] = $this->update_host($target, $this->_host);
+                        }else{
+                            $temp[$key] = $this->update_host($target, $this->_host);
+                        }
                     }else{
                         if(empty($e->innertext)){
                             $temp[$key] = '';
                         }else{
-                            //$temp[$key] = iconv('gbk','utf-8//IGNORE',$e->innertext);//$e->outertext;
-
                             $temp[$key] = mb_convert_encoding($e->innertext,'UTF-8');
                         }
                     }
@@ -115,13 +123,12 @@ class Crawler_Data
     {
         if($next_path_attribute->next == null) return '';
         if($next_path_attribute->current == null)
-        {
-            return $html->find($next_path_attribute->next,0)->href;
+        { 
+            return $this->update_host($html->find($next_path_attribute->next,0)->href, $this->_host);
         }else
         {
             $e = $html->find($next_path_attribute->current,0);
             $p = $e->next_sibling();
-            echo $p->outertext;
             $target = $p->href;
             if(empty($target))
             {
@@ -136,14 +143,14 @@ class Crawler_Data
     }
     
     function update_host($link, $host)
-    {
-        if(strpos($link,4,0) == 'http')
+    { 
+        if(strpos($link,'http',0) === 0)
         {
             return $link;
-        }else if(strpos($link,1,0) != '/'){
-            return $host.'/'.$link;
-        }else{
+        }else if(strpos($link,'/',0) === 0){
             return $host.$link;
+        }else{
+            return $host.'/'.$link;
         }
     }
     

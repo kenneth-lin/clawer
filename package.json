@@ -4,7 +4,8 @@
   "description": "Clawer",
   "main": "index.js",
   "scripts": {
-    "clear": "DEL /F /A /Q ./run_bat"
+    "clear": "rd /s /q run_bat",
+    "create": "mkdir run_bat"
   },
   "repository": {
     "type": "git",

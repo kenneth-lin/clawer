@@ -6,15 +6,15 @@ define("MYSQL_PASSWORD","");
 define("MYSQL_DATABASE","k_clawer");
 
 
-function object_array($array) {  
-    if(is_object($array)) {  
-        $array = (array)$array;  
-     } if(is_array($array)) {  
-         foreach($array as $key=>$value) {  
-             $array[$key] = object_array($value);  
-             }  
-     }  
-     return $array;  
+function object_array($array) {
+    if(is_object($array)) {
+        $array = (array)$array;
+    } if(is_array($array)) {
+        foreach($array as $key=>$value) {
+            $array[$key] = object_array($value);
+        }
+    }
+    return $array;
 }
 
 class MySQLClass
@@ -55,6 +55,16 @@ class MySQLClass
     static public function createTable($conn,$table_name)
     {
         $sql = "create table if not exists `$table_name`(ID int(11)  NOT NULL auto_increment Primary Key, create_time datetime)";
+        $result = $conn->query($sql);
+        if($result === false){
+            return false;
+        }
+        return true;
+    }
+    
+    static public function removeTable($conn,$table_name)
+    {
+        $sql = "drop table if exists `$table_name`";
         $result = $conn->query($sql);
         if($result === false){
             return false;
@@ -123,17 +133,20 @@ class MySQLClass
         $sql = "select * from `$table_name` ".$condition;
         $result = $conn->query($sql);
         $reslist = array();
+        if($result === false){
+            return $reslist;
+        }
         while($row = $result->fetch_assoc()){
             $reslist[] = $row;
         }
         return $reslist;
     }
-
+    
     static public function clawerInit($json_params)
     {
         $record = new InputDataRecord();
         $record->init($json_params);
-
+        
         MySQLClass::createDatabase() or die('create database error');
         $conn = MySQLClass::createConn();
         MySQLClass::createTable($conn,$record->crawler_main_table) or die('create table error');
@@ -144,22 +157,54 @@ class MySQLClass
         //$conn->close();
         return $conn;
     }
-
+    
     static public function addClawerData($json_params,$data)
     {
-
+        
         $conn = MySQLClass::clawerInit($json_params);
         $record = new InputDataRecord();
         $record->init($json_params);
         MySQLClass::addData($conn,$record->crawler_main_table,$data);
         MySQLClass::close($conn);
     }
-
+    
     static public function findClawerData($json_params){
         $conn = MySQLClass::createConn();
         $record = new InputDataRecord();
         $record->init($json_params);
         $data = MySQLClass::findData($conn,$record->crawler_main_table,$record->condition);
+        MySQLClass::close($conn);
+        return $data;
+    }
+    
+    static public function deleteClawerData($json_params){
+        $conn = MySQLClass::createConn();
+        $record = new InputDataRecord();
+        $record->init($json_params);
+        $data = MySQLClass::removeTable($conn,$record->crawler_main_table);
+        MySQLClass::close($conn);
+    }
+    
+    static public function writeProgressLog($data){
+        $progress_table = 'progress';
+        MySQLClass::createDatabase() or die('create database error');
+        $conn = MySQLClass::createConn();
+        MySQLClass::createTable($conn,$progress_table) or die('create table `progress` error');
+        if(count($data) > 0){
+            foreach($data[0] as $key => $value)
+            {
+                MySQLClass::alterTable($conn,$progress_table,$key,'text') or die('create `progress` column error');
+            }
+        }
+        MySQLClass::addData($conn,$progress_table,$data);
+        MySQLClass::close($conn);
+    }
+    
+    static public function findProgressLog(){
+        $progress_table = 'progress';
+        $condition = 'where 1 = 1 order by id desc limit 50';
+        $conn = MySQLClass::createConn();
+        $data = MySQLClass::findData($conn,$progress_table,$condition);
         MySQLClass::close($conn);
         return $data;
     }

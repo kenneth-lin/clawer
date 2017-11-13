@@ -6,3 +6,6 @@ history_file/**
 
 #run_bat
 run_bat/**
+
+#node_modules
+node_modules/**

@@ -1,0 +1,41 @@
+<div id="click_to_run_it">
+    <form action="/?action=bat" method="POST">
+        <div><input type="text" name="run_bat" id="run_bat"></div>
+        <div><input type="submit" value="Run this batch on server." onclick="run_params_update();"></div>
+    </form>
+</div>
+
+
+<style>
+    #click_to_run_it input {
+        margin: 4px 0;
+    }
+
+    #click_to_run_it input[type=text] {
+        font-size: 20px;
+        width: 800px;
+        color: red;
+    }
+
+    #click_to_run_it input[type=submit] {
+        font-size: 20px;
+        width: 300px;
+        float: right;
+        color: red;
+    }
+
+    #bat_warning {
+        font-size: 20px;
+        margin: 10px;
+        color: blue;
+    }
+</style>
+
+<script>
+    run_params_update();
+    function run_params_update() {
+        var run_bat = document.getElementById('run_it').innerText;
+        document.getElementById('run_bat').value = run_bat;
+    }
+
+</script>
