@@ -16,6 +16,11 @@ class ClawerRender{
        return '<td>'.$str.'</td>';
     }
 
+    static public function td_copy($str)
+    {
+       return '<td class="td_copy">'.$str.'</td>';
+    }
+
     static public function tr($str)
     {
        return '<tr>'.$str.'</tr>';

@@ -127,13 +127,19 @@ class Crawler_Data
     
     function find_next_path($html,$next_path_attribute)
     {
-        if($next_path_attribute->next == null) return '';
+        if($next_path_attribute->next == null && $next_path_attribute->current == null) return '';
         if($next_path_attribute->current == null)
         { 
             return $this->update_host($html->find($next_path_attribute->next,0)->href, $this->_host);
         }else
         {
-            $e = $html->find($next_path_attribute->current,0);
+            $current_attr = $next_path_attribute->current;
+            $current_index = 0;
+            if(strpos($next_path_attribute->current,':eq(') > 0){
+                $current_attr = substr($next_path_attribute->current, 0, strpos($next_path_attribute->current,':eq('));
+                $current_index = substr($next_path_attribute->current,strpos($next_path_attribute->current,':eq(')+4, strpos($next_path_attribute->current,')') - strpos($next_path_attribute->current,':eq(') -4);
+            }
+            $e = $html->find($current_attr,intval($current_index));
             $p = $e->next_sibling();
             $target = $p->href;
             if(empty($target))

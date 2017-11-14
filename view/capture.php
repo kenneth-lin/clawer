@@ -14,7 +14,7 @@ if(isset($_REQUEST['params'])){
         $record->init($main_params);
         $attr = $record->attribute;
         foreach( $attr as $key => $value){
-            $render = $render.ClawerRender::td(ClawerRender::span($key));
+            $render = $render.ClawerRender::td_copy(ClawerRender::span($key));
         }
         $render = ClawerRender::tr($render);
         for($i=0;$i<count($data);$i++){
