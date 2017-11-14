@@ -1,4 +1,4 @@
-<form action= 'index.php' method= 'GET'> 
+<form action='' method= 'POST' id='search_form'> 
 <div>
     <span><input type="text" name="search"><input value='search' type="submit"/></span>
 </div>
@@ -36,3 +36,11 @@
     }
 
 </style>
+    
+
+<script>
+
+
+document.getElementById("search_form").setAttribute('action', location.href);
+
+</script>

@@ -27,7 +27,7 @@
             if(strpos($key,'href') !== false){
                 $temp_render = $temp_render.ClawerRender::td(ClawerRender::span(ClawerRender::a($value)));
             }else{
-                $temp_render = $temp_render.ClawerRender::td(ClawerRender::span($value));
+                $temp_render = $temp_render.ClawerRender::td(ClawerRender::span_update_table($value));
             }
 
             
@@ -37,6 +37,6 @@
     }
     echo ClawerRender::table($render);
 
-
+    EXT_Template::add_header('./template/ls_table.html');
 
 ?>

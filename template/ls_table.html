@@ -1,0 +1,17 @@
+<script>
+    function update_table(table) {
+        var cookie_params = decodeURI(getCookie('params'));
+        var params_o = JSON.parse(cookie_params);
+        params_o['table_name'] = table;
+        var cookie_params = JSON.stringify(params_o);
+
+        if (cookie_params != "null") {
+            document.getElementById("params").value = formatJson(cookie_params);
+        } else {
+            document.getElementById("params").value = formatJson(JSON.parse(initStartParamsString()));
+        }
+
+        setCookie('params', encodeURI(document.getElementById("params").value));
+    }
+
+</script>

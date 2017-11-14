@@ -11,6 +11,16 @@ class ClawerRender{
        return '<span>'.$str.'</span>';
     }
 
+    static public function span_go($str)
+    {
+       return '<span><a href="/?action=search&column='.$str.'">'.$str.'</a></span>';
+    }
+
+    static public function span_update_table($str)
+    {
+        return '<span onclick="javascript:update_table(\''.$str.'\');">'.$str.'</span>';
+    }
+
     static public function td($str)
     {
        return '<td>'.$str.'</td>';

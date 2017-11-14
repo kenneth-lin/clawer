@@ -8,10 +8,21 @@ EXT_Template::add_header('./template/header.html');
 
 echo '<div class="content">';
 EXT_Template::add_header('./template/selector.html');
+
+
+if(isset($_REQUEST['action'])){
+    $action = $_REQUEST['action'];
+    if($action == 'search'){
+        include('./view/search.php');
+        return;
+    }
+}
+
 EXT_Template::add_header('./template/params.html');
 
 if(isset($_REQUEST['action'])){
     $action = $_REQUEST['action'];
+    
     if($action == 'show'){
         include('./view/show.php');
     }else if($action == 'add'){
