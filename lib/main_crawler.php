@@ -23,7 +23,7 @@ class Crawler_Data
         }
         return $data;
     }
-
+    
     static public function updateClawerParamLink($params,$link){
         $t_var = json_decode($main_params);
         if(strpos($link,4,0) == 'http')
@@ -46,7 +46,7 @@ class Crawler_Data
         $this->_out_data = array();
         $this->_special_encode = $record->encode;
     }
-
+    
     public function params()
     {
         return $this->_crawler_params;
@@ -80,7 +80,7 @@ class Crawler_Data
         'timeout' => 5
         )
         ));
-        while($cnt < 3 && ($str=@$html->load_file($path))===FALSE) {
+        while($cnt < 3 && ($str=$html->load($this->curl_url($path)))===FALSE) {
             $cnt++;
         }
         if($cnt == 3) return;
@@ -129,7 +129,7 @@ class Crawler_Data
     {
         if($next_path_attribute->next == null && $next_path_attribute->current == null) return '';
         if($next_path_attribute->current == null)
-        { 
+        {
             return $this->update_host($html->find($next_path_attribute->next,0)->href, $this->_host);
         }else
         {
@@ -155,7 +155,7 @@ class Crawler_Data
     }
     
     function update_host($link, $host)
-    { 
+    {
         if(strpos($link,'http',0) === 0)
         {
             return $link;
@@ -164,6 +164,20 @@ class Crawler_Data
         }else{
             return $host.'/'.$link;
         }
+    }
+    
+    function curl_url($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_HEADER,0);
+        $output = curl_exec($ch);
+        if($output === FALSE ){
+            echo "CURL Error:".curl_error($ch);
+        }
+        curl_close($ch);
+        return $output;
     }
     
 }
