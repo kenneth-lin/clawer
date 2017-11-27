@@ -3,7 +3,7 @@
 class ClawerRender{
     static public function table($str)
     {
-       return '<table class="show_table"><tbody>'.$str.'</table></tbody>';
+       return '<table class="show_table" id="target_table"><tbody>'.$str.'</tbody></table>';
     }
 
     static public function span($str)
@@ -39,6 +39,11 @@ class ClawerRender{
     static public function a($str)
     {
        return '<a href="'.$str.'">'.$str.'</a>';
+    }
+
+    static public function a_go($str)
+    {
+       return '<a onclick="javascript:on_href_click(\''.$str.'\');">'.$str.'</a>';
     }
 
     static public function div($str)

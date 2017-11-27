@@ -4,6 +4,12 @@
 </div>
 </form>
 
+<form action='' method= 'POST' id='href_form'> 
+    <div style="display:none;">
+        <span><input name="go_href_set" id="go_href_set"><input value='search' type="submit" id="href_submit"/></span>
+    </div>
+    </form>
+
 <style>
 
     div{
@@ -39,8 +45,12 @@
     
 
 <script>
+    function on_href_click(href){
+        document.getElementById('go_href_set').value = href;
+        document.getElementById('href_submit').click();
+    }
 
 
 document.getElementById("search_form").setAttribute('action', location.href);
-
+document.getElementById("href_form").setAttribute('action', location.href);
 </script>
