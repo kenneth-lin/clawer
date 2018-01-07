@@ -96,7 +96,9 @@ if(isset($_COOKIE['params']) && isset($_REQUEST['search']) && isset($_REQUEST['c
             }
 
             if($bContinue) continue;
-            if(strpos($key,'href') !== false){
+            if(strpos($key,'image') !== false){
+                $temp_render = $temp_render.ClawerRender::td(ClawerRender::span(ClawerRender::img($value)));
+            }else if(strpos($key,'href') !== false){
                 $temp_render = $temp_render.ClawerRender::td(ClawerRender::span(ClawerRender::a_go($value)));
             }else{
                 $temp_render = $temp_render.ClawerRender::td(ClawerRender::span($value));

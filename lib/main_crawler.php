@@ -177,6 +177,7 @@ class Crawler_Data
             echo "CURL Error:".curl_error($ch);
         }
         curl_close($ch);
+        $output = str_replace("data-src","href",$output);
         return $output;
     }
     

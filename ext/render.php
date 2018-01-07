@@ -41,6 +41,11 @@ class ClawerRender{
        return '<a href="'.$str.'">'.$str.'</a>';
     }
 
+    static public function img($str)
+    {
+       return '<img src="'.$str.'"></img>';
+    }
+
     static public function a_go($str)
     {
        return '<a onclick="javascript:on_href_click(\''.$str.'\');">'.$str.'</a>';
